@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Crypto import Random
 from Crypto.Cipher import AES
 import base64
@@ -31,7 +32,7 @@ def unpad_pkcs5(text):
 def encrypt(plaintext, passphrase, iv):
   try:
     aes = AES.new(passphrase, AES.MODE_CBC, iv)
-    return base64.b64encode(aes.encrypt(pad_pkcs5(plaintext)))
+    return base64.b64encode(aes.encrypt(pad_pkcs5(plaintext))).decode('utf-8')
   except:
     print "Encryption exception in encrypt()"
 
@@ -40,7 +41,7 @@ def decrypt(ciphertext, passphrase, iv):
   try:
     decrypted = base64.b64decode(ciphertext)
     aes = AES.new(passphrase, AES.MODE_CBC, iv)
-    plaintext = unpad_pkcs5(aes.decrypt(decrypted))
+    plaintext = unpad_pkcs5(aes.decrypt(decrypted)).decode('utf-8')
     return plaintext
   except:
     print "Encryption exception in decrypt()"
